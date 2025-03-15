@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Green City</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="container-fluid" style="width: fit-content; margin-top: 4%">
+        <div class="card text-center">
+            <div class="card-header" style="background-color: darkseagreen">
+                <h2>Inserisci le informazioni della tua todo</h2>
+            </div>
+            <div class="card-body">
+                <form name="ins_box_form" style="margin-top: 2%" method="POST" role="form">
+                    <h4>
+                    <label for="name">Nome</label>
+                    <br>
+                    <input type="text" name="nome" class="form-control" required placeholder="nome box">
+                    <br>
+                    <label for="name">Contenuto</label>
+                    <br>
+                    <input type="text" name="contenuto" class="form-control" required placeholder="contenuto">
+                    <br>
+                    <label>Priorità </label>
+                    <br>
+                    <input list="priorita" name="priorita" class="form-select" required placeholder="selezionare priorità">
+                    <datalist id="priorita" name="priorita" >
+                        <option value="1" />
+                        <option value="2" />
+                        <option value="3" />
+                    </datalist>
+                    <br>
+                    </h4>
+                    <input type="submit" value="Carica la tua box" class="btn btn-outline-success btn-lg">
+                    <br>
+                </form>
+            </div>
+        </div>
+    </div>
+    <hr>
+		{% for todo in todos %}
+		<div class="todo">
+	    <!--Fetching a todo-->
+		<p> {{ todo['nome'] }} <i>
+			({{ todo['contenuto'] }})</i> 
+		</p>
+        {% endfor %}
+</body>
+</html>
