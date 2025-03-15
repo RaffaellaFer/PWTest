@@ -26,25 +26,31 @@ except Exception as e:
 #Database su cloud
 app.config['MONGO_URI'] = 'mongodb+srv://RafMosca:RafMoscaDB@cluster0.rzvmm.mongodb.net/?retryWrites=true&w=majority'
 mongo = PyMongo(app)
-db = client.todo
+db = client.pharmaCenter
 
 
 #FUNZIONE PER CREARE UNA FOODBOX
 @app.route("/")
 def home():
-    return render_template('home.html') # render home page template with all todos
+    return render_template('home.html') # render home page template with all farmaci
 
 #FUNZIONE PER CREARE UNA FOODBOX
 @app.route("/farmaco/", methods=('GET', 'POST'))
 def farmaco():
     if request.method == "POST":
         nome = request.form.get('nome')
-        contenuto = request.form.get('contenuto')
-        priorita = request.form.get('priorita')
-        db.todoList.insert_one({'nome': nome, 'contenuto': contenuto, 'priorita': int(priorita)})
+        tipologia = request.form.get('tipologia')
+        tempoElaborazione = request.form.get('tempoElaborazione')
+        db.farmaci.insert_one({'nome': nome, 'tipologia': tipologia, 'tempoElaborazione': int(tempoElaborazione)})
         return redirect(url_for('farmaco'))
-    all_todos = db.todoList.find()    # display all todo documents
-    return render_template('farmaco.html', todos = all_todos) # render home page template with all todos
+    all_farmaci = db.farmaci.find()    # display all todo documents
+    return render_template('farmaco.html', farmaci = all_farmaci) # render home page template with all farmaci
+
+#FUNZIONE PER CREARE UNA FOODBOX
+@app.route("/farmacoView/", methods=('GET', 'POST'))
+def farmacoView():
+    all_farmaci = db.farmaci.find()    # display all todo documents
+    return render_template('farmacoView.html', farmaci = all_farmaci) # render home page template with all farmaci
 
 if __name__ == "__main__":
     app.run(debug=True) #running your server on development mode, setting debug to True

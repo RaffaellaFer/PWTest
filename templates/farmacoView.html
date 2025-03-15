@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% for farmaco in farmaci %}
+    <div class="todo">
+    <!--Fetching a todo-->
+    <p> {{ farmaco['nome'] }} 
+        <i>({{ farmaco['tipologia'] }})</i> 
+        <i>({{ farmaco['tempoElaborazione'] }})</i> 
+    </p>
+{% endfor %}
+
+{% endblock %}
