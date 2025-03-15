@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container-fluid" style="width: fit-content; margin-top: 4%">
+    <div class="card text-center">
+        <div class="card-header" style="background-color: darkseagreen">
+            <h2>Inserisci le informazioni della tua todo</h2>
+        </div>
+        <div class="card-body">
+            <form name="ins_box_form" style="margin-top: 2%" method="POST" role="form">
+                <h4>
+                <label for="name">Nome</label>
+                <br>
+                <input type="text" name="nome" class="form-control" required placeholder="nome box">
+                <br>
+                <label for="name">Contenuto</label>
+                <br>
+                <input type="text" name="contenuto" class="form-control" required placeholder="contenuto">
+                <br>
+                <label>Priorità </label>
+                <br>
+                <input list="priorita" name="priorita" class="form-select" required placeholder="selezionare priorità">
+                <datalist id="priorita" name="priorita" >
+                    <option value="1" />
+                    <option value="2" />
+                    <option value="3" />
+                </datalist>
+                <br>
+                </h4>
+                <input type="submit" value="Carica la tua box" class="btn btn-outline-success btn-lg">
+                <br>
+            </form>
+        </div>
+    </div>
+</div>
+<hr>
+    {% for todo in todos %}
+    <div class="todo">
+    <!--Fetching a todo-->
+    <p> {{ todo['nome'] }} <i>
+        ({{ todo['contenuto'] }})</i> 
+    </p>
+    {% endfor %}
+
+{% endblock %}
