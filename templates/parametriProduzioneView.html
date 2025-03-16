@@ -35,32 +35,32 @@
             </td>
             </tr>
             <!-- Modal -->
-    <div class="modal fade" id="edit{{parametroProduzione._id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">   
-            <div class="modal-content">
-                <form name="ins_box_form" style="margin-top: 2%" action="{{url_for('modificaParametriProduzione', oid=parametroProduzione._id)}}" method="POST" role="form">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modifica parametro produzione</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal fade" id="edit{{parametroProduzione._id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">   
+                    <div class="modal-content">
+                        <form name="ins_box_form" style="margin-top: 2%" action="{{url_for('modificaParametriProduzione', oid=parametroProduzione._id)}}" method="POST" role="form">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Modifica parametro produzione</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="tipologia" placeholder="name@example.com" value="{{parametroProduzione.tipologia}}">
+                                    <label for="floatingInput">Tipologia</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="int" class="form-control" name="tempoElaborazione" placeholder="name@example.com" value="{{parametroProduzione.tempoElaborazione}}">
+                                    <label for="floatingInput">Tempo</label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                                <input type="submit" value="Modifica il tuo parametro produzione" class="btn btn-outline-success">
+                            </div>
+                        </form>  
                     </div>
-                    <div class="modal-body">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="tipologia" placeholder="name@example.com" value="{{parametroProduzione.tipologia}}">
-                            <label for="floatingInput">Tipologia</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="int" class="form-control" name="tempoElaborazione" placeholder="name@example.com" value="{{parametroProduzione.tempoElaborazione}}">
-                            <label for="floatingInput">Tempo</label>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                        <input type="submit" value="Modifica il tuo parametro produzione" class="btn btn-outline-success">
-                    </div>
-                </form>  
+                </div>    
             </div>
-        </div>    
-    </div>
         {% endfor %}
         </tbody>
     </table>
