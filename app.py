@@ -98,5 +98,52 @@ def modificaParametriProduzione(oid):
         db.parametriProduzione.update_one({"_id" : ObjectId(oid)}, {"$set": {"tipologia": tipologia, "tempoElaborazione": tempoElaborazione}})
     return redirect('/parametriProduzioneView/')
 
+#FUNZIONE PER CREARE UNA FOODBOX
+@app.route("/creaLotto/", methods=('GET', 'POST'))
+def creaLotto():
+    all_farmaci = db.farmaci.find()    # display all todo documents
+    listFarmaci = list(all_farmaci)
+    for farmaco in listFarmaci:
+        farmaco['quantita'] = 0
+    print(listFarmaci)
+    return render_template('creaLotto.html', farmaci = listFarmaci) # render home page template with all farmaci
+
+@app.route('/aggiorna_quantita', methods=['POST'])
+def aggiorna_quantita():
+    all_farmaci = db.farmaci.find()    # display all todo documents
+    listFarmaci = list(all_farmaci)
+    all_parametriProduzioneView = db.parametriProduzione.find() 
+    listParametriProduzione = list(all_parametriProduzioneView)
+
+    # Conversione in mappa
+    mappaParametriProduzione = {elemento['tipologia']: elemento['tempoElaborazione'] for elemento in listParametriProduzione}
+
+    mappa = {}
+
+    for farmaco in listFarmaci:
+        # Recupera il valore dal form usando l'ID del farmaco
+        input_name = f"quantita_{farmaco['_id']}"
+        nuova_quantita = request.form.get(input_name)
+        
+        if nuova_quantita:
+            farmaco['quantita'] = int(nuova_quantita)  # Aggiorna il valore in memoria o nel database
+
+        if farmaco['tipologia'] not in mappa:
+            mappa[farmaco['tipologia']] = 0  # Inizializza il valore a 0
+        mappa[farmaco['tipologia']] += int(farmaco['tempoElaborazione']) * int(farmaco['quantita'])
+
+
+    # Reindirizza o restituisci una risposta
+
+    print(mappa)
+    print(listFarmaci)
+    print(listParametriProduzione)
+
+    for param in listParametriProduzione:
+        if mappa[param["tipologia"]] > mappaParametriProduzione[param["tipologia"]]:
+            print("errore")
+    
+    return redirect('/creaLotto/')
+
 if __name__ == "__main__":
     app.run(debug=True) #running your server on development mode, setting debug to True
