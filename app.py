@@ -52,5 +52,22 @@ def farmacoView():
     all_farmaci = db.farmaci.find()    # display all todo documents
     return render_template('farmacoView.html', farmaci = all_farmaci) # render home page template with all farmaci
 
+@app.route('/elimina/<oid>', methods=('POST',))
+def elimina(oid):
+    db.farmaci.delete_one({"_id": ObjectId(oid)})
+    return redirect('/farmacoView/')
+
+@app.route('/modificaFarmaco/<oid>', methods=('POST',))
+def modificaFarmaco(oid):
+    if request.method == "POST":
+        nome = request.form.get('nome')
+        tipologia = request.form.get('tipologia')
+        tempoElaborazione = request.form.get('tempoElaborazione')
+        db.farmaci.update_one({"_id" : ObjectId(oid)}, {"$set": {"nome": nome, "tipologia": tipologia, "tempoElaborazione": tempoElaborazione}})
+    print(nome)
+    print(tipologia)
+    print(tempoElaborazione)
+    return redirect('/farmacoView/')
+
 if __name__ == "__main__":
     app.run(debug=True) #running your server on development mode, setting debug to True
