@@ -13,7 +13,7 @@ from flask_pymongo import PyMongo
 app = Flask(__name__)
 # Create the mongodb client
 
-uri = "mongodb+srv://RafMosca:RafMoscaDB@cluster0.rzvmm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+uri = "mongodb+srv://raffafer97:raffafer97DB@cluster0.bqvzj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 # Create a new client and connect to the server
 client = MongoClient(uri, server_api=ServerApi('1'))
 # Send a ping to confirm a successful connection
@@ -68,6 +68,35 @@ def modificaFarmaco(oid):
     print(tipologia)
     print(tempoElaborazione)
     return redirect('/farmacoView/')
+
+@app.route("/parametriProduzione/", methods=('GET', 'POST'))
+def parametriProduzione():
+    if request.method == "POST":
+        tipologia = request.form.get('tipologia')
+        tempoElaborazione = request.form.get('tempoElaborazione')
+        db.parametriProduzione.insert_one({'tipologia': tipologia, 'tempoElaborazione': int(tempoElaborazione)})
+        return redirect(url_for('parametriProduzione'))
+    all_parametriProduzione = db.parametriProduzione.find()    # display all todo documents
+    return render_template('parametriProduzione.html', parametriProduzione = all_parametriProduzione) # render home page template with all farmaci
+
+
+@app.route("/parametriProduzioneView/", methods=('GET', 'POST'))
+def parametriProduzioneView():
+    all_parametriProduzioneView = db.parametriProduzione.find()    # display all todo documents
+    return render_template('parametriProduzioneView.html', parametriProduzione = all_parametriProduzioneView) # render home page template with all farmaci
+
+@app.route('/eliminaParametriProduzione/<oid>', methods=('POST',))
+def eliminaParametriProduzione(oid):
+    db.parametriProduzione.delete_one({"_id": ObjectId(oid)})
+    return redirect('/parametriProduzioneView/')
+
+@app.route('/modificaParametriProduzione/<oid>', methods=('POST',))
+def modificaParametriProduzione(oid):
+    if request.method == "POST":
+        tipologia = request.form.get('tipologia')
+        tempoElaborazione = request.form.get('tempoElaborazione')
+        db.parametriProduzione.update_one({"_id" : ObjectId(oid)}, {"$set": {"tipologia": tipologia, "tempoElaborazione": tempoElaborazione}})
+    return redirect('/parametriProduzioneView/')
 
 if __name__ == "__main__":
     app.run(debug=True) #running your server on development mode, setting debug to True
