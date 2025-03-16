@@ -41,7 +41,7 @@
         <div class="modal-dialog">   
             <div class="modal-content">
                 <form name="ins_box_form" style="margin-top: 2%" action="{{url_for('modificaFarmaco', oid=farmaco._id)}}" method="POST" role="form">
-                    <div class="modal-header" align="center">
+                    <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Modifica farmaco</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -62,9 +62,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" aria-label="Close">Close</button>
                         <input type="submit" value="Modifica il tuo farmaco" class="btn btn-outline-success">
-                        <br>
                     </div>
-                    <br>
                 </form>  
             </div>
         </div>    
