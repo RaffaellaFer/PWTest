@@ -95,7 +95,7 @@ def modificaParametriProduzione(oid):
     if request.method == "POST":
         tipologia = request.form.get('tipologia')
         tempoElaborazione = request.form.get('tempoElaborazione')
-        db.parametriProduzione.update_one({"_id" : ObjectId(oid)}, {"$set": {"tipologia": tipologia, "tempoElaborazione": tempoElaborazione}})
+        db.parametriProduzione.update_one({"_id" : ObjectId(oid)}, {"$set": {"tipologia": tipologia, "tempoElaborazione": int(tempoElaborazione)}})
     return redirect('/parametriProduzioneView/')
 
 #FUNZIONE PER CREARE UNA FOODBOX
@@ -135,8 +135,10 @@ def aggiorna_quantita():
 
     # Reindirizza o restituisci una risposta
 
-    print(mappa)
+    print("mappa", mappa)
+    print('')
     print(listFarmaci)
+    print('')
     print(listParametriProduzione)
 
     for param in listParametriProduzione:
